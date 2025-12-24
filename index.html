@@ -2,146 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FC 26 Pack Simulator</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1e1e1e;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    h1 {
-      color: #ffcc00;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background-color: #ffcc00;
-      color: #000;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      background-color: #ffaa00;
-    }
-
-    #packInfo {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-
-    .pack-card {
-      width: 300px;
-      height: 150px;
-      margin: 20px auto;
-      background-color: #222;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: #fff;
-      box-shadow: 0 0 10px #000;
-      transition: transform 0.6s;
-      cursor: pointer;
-    }
-
-    .pack-card.flip {
-      transform: rotateY(180deg);
-    }
-
-    .pack-card.glow {
-      box-shadow: 0 0 20px #ffcc00;
-    }
+    body { font-family: Arial; text-align: center; background-color: #222; color: white; padding: 20px; }
+    button { padding: 10px 20px; margin: 10px; font-size: 16px; cursor: pointer; }
+    #packInfo { margin-top: 20px; font-size: 18px; }
   </style>
 </head>
 <body>
-  <h1>⚽ FC 26 Pack Simulator ⚽</h1>
-  <p>Click the button to open a pack!</p>
-
-  <!-- Button -->
+  <h1>FC 26 Pack Simulator</h1>
   <button id="openPackBtn">Open Pack</button>
 
-  <!-- Pack card -->
-  <div id="packCard" class="pack-card">Click "Open Pack"!</div>
-
-  <!-- Stats -->
   <div id="packInfo">
     <p id="playerName">Player: -</p>
     <p id="playerRating">Rating: -</p>
     <p id="rarity">Rarity: -</p>
-    <p id="packsOpened">Packs Opened: 0</p>
-    <p id="bestPull">Best Pull: -</p>
   </div>
 
   <script>
-    // ----------------------------
-    // PACK SIMULATOR (BEGINNER VERSION)
-    // ----------------------------
-    const openPackBtn = document.getElementById("openPackBtn");
-    const packCard = document.getElementById("packCard");
+    const players = [
+      { name: "Lionel Messi", rating: 91, rarity: "Walkout 🔥" },
+      { name: "Kylian Mbappé", rating: 91, rarity: "Walkout 🔥" },
+      { name: "Mohamed Salah", rating: 91, rarity: "Walkout 🔥" },
+      { name: "Son Heung-min", rating: 85, rarity: "Rare" },
+      { name: "Thomas Müller", rating: 80, rarity: "Common" }
+    ];
+
     const playerNameEl = document.getElementById("playerName");
     const playerRatingEl = document.getElementById("playerRating");
     const rarityEl = document.getElementById("rarity");
-    const packsOpenedEl = document.getElementById("packsOpened");
-    const bestPullEl = document.getElementById("bestPull");
+    const openPackBtn = document.getElementById("openPackBtn");
 
-    // Starter player pool
-    const players = [
-      { name: "Lionel Messi (RW)", rating: 91, rarity: "Walkout 🔥" },
-      { name: "Kylian Mbappé (ST)", rating: 91, rarity: "Walkout 🔥" },
-      { name: "Mohamed Salah (RW)", rating: 91, rarity: "Walkout 🔥" },
-      { name: "Son Heung-min (LW)", rating: 85, rarity: "Rare" },
-      { name: "Rodrigo De Paul (CM)", rating: 84, rarity: "Rare" },
-      { name: "Thomas Müller (CM)", rating: 80, rarity: "Common" },
-      { name: "Sergio Busquets (CDM)", rating: 80, rarity: "Common" }
-    ];
-
-    let packsOpened = 0;
-    let bestPull = { name: "-", rating: 0 };
-
-    function openPack() {
-      packsOpened++;
-      packCard.classList.add("flip");
-      packCard.textContent = "Opening...";
-
-      setTimeout(() => {
-        // Pick a random player
-        const player = players[Math.floor(Math.random() * players.length)];
-
-        // Update best pull
-        if (player.rating > bestPull.rating) bestPull = player;
-
-        // Update UI
-        packCard.textContent = `${player.name}\nRating: ${player.rating}\n${player.rarity}`;
-        playerNameEl.textContent = `Player: ${player.name}`;
-        playerRatingEl.textContent = `Rating: ${player.rating}`;
-        rarityEl.textContent = `Rarity: ${player.rarity}`;
-        packsOpenedEl.textContent = `Packs Opened: ${packsOpened}`;
-        bestPullEl.textContent = `Best Pull: ${bestPull.name} (${bestPull.rating})`;
-
-        // Glow effect for walkouts
-        if (player.rarity.includes("Walkout")) {
-          packCard.classList.add("glow");
-        } else {
-          packCard.classList.remove("glow");
-        }
-
-        // Reset flip
-        setTimeout(() => packCard.classList.remove("flip"), 600);
-      }, 500);
-    }
-
-    openPackBtn.addEventListener("click", openPack);
+    openPackBtn.addEventListener("click", () => {
+      const player = players[Math.floor(Math.random() * players.length)];
+      playerNameEl.textContent = `Player: ${player.name}`;
+      playerRatingEl.textContent = `Rating: ${player.rating}`;
+      rarityEl.textContent = `Rarity: ${player.rarity}`;
+    });
   </script>
 </body>
 </html>
